@@ -33,13 +33,13 @@ gnorm = inf; x = x0; niter = 0; dx = inf;
 % f = @(x1,x2) x1.^2 + x1.*x2 + 3*x2.^2; 
 
 % Rosenbrock function in 2 Dimension
-f = @(x1,x2) ((1-x1).^2)+(100*((x2-(x1.^2)).^2));  
+f = @Rosenbrock;
 
 % plot objective function contours for visualization:
 x1 = -0.7:0.01:1.1;
 x2 = -0.1:0.01:1.1;
 [X1,X2]=meshgrid(x1,x2);
-z =  Rosenbrock(X1,X2);
+z =  f(X1,X2);
 figure(1); clf;
 n = 100; % the number of contour lines
 contour(x1,x2,z,n);
