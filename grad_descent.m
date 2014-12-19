@@ -1,5 +1,5 @@
 % 下载地址：http://www.mathworks.com/matlabcentral/fileexchange/35535-simplified-gradient-descent-optimization
-
+% Jie Yang   Neu, China  
 function [xopt,fopt,niter,gnorm,dx] = grad_descent(varargin)
 
 if nargin==0
@@ -55,8 +55,9 @@ while and(gnorm>=tol, and(niter <= maxiter, dx >= dxmin))
     % calculate gradient:
     g = grad(x);
     gnorm = norm(g);
-    % take step:
-    xnew = x - alpha*g;
+    % take step: 0.7e-1  or  2.6e-1
+    [alpha,~] = fminbnd(@(alpha) iter(alpha,x,g),0,0.7e-1)
+    xnew = x - alpha  *  g;
     % check step
     if ~isfinite(xnew)
         display(['Number of iterations: ' num2str(niter)])
@@ -77,8 +78,15 @@ xopt = x;
 fopt = f2(xopt);
 niter = niter - 1;
 
+end
+
 % define the gradient of the objective
 function g = grad(x)
 g = [400*x(1).^3-400*x(1)*x(2)+2*x(1)-2
     200*x(2)-200*x(1).^2];
+end
+
+function frosen = iter(alpha,A,B)
+    xnew = A - B*alpha;
+    frosen = Rosenbrock(xnew(1),xnew(2));
 end
